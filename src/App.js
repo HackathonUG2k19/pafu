@@ -46,16 +46,22 @@ class App extends React.Component {
         super(props);
         this.state = {
             handle : '',
-            submissions: [],
             tags : BLANK_TAGS,
             suggestedProblems : [],
-            solvedProblems : [],
+            submissions: []
         };
         this.handleHandleChange = this.handleHandleChange.bind(this);
+        this.getSubmissions = this.getSubmissions.bind(this);
     }
 
     handleHandleChange(event) {
         this.setState({ handle: event.target.value });
+    }
+
+    getSubmissions() {
+        codeforces.getSubmissions(this.state.handle).then(submissions =>{
+            this.setState({submissions: submissions});
+        });
     }
 
     render() {
@@ -64,8 +70,9 @@ class App extends React.Component {
                 <h1>Cf-Suggester</h1>
                 <div>
                     <input onChange={this.handleHandleChange} placeholder="enter codeforces handle" />
-                    <button>Go</button>
+                    <button onClick={this.getSubmissions}>Go</button>
                 </div>
+                {/*this.state.submissions.map(sub => sub.id.toString())*/}
             </div>
             //input for handle here
             //suggested problems here

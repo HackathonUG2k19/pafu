@@ -10,7 +10,8 @@ const codeforces = {
         let url = BASE_URL + "user.status?handle=" + handle;
         return fetch(url)
             .then(response => response.json())
-            .then(jsonResponse => jsonResponse.result);
+            .then(jsonResponse => jsonResponse.result)
+            .catch(() => []);
     },
 
     getProblems : () => {

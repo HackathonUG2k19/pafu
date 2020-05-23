@@ -17,7 +17,7 @@ const minus_change = (x,a) => {
 };
 
 const changes = (strength, difficulty, verdict) => {
-    if(verdict == 'OK'){
+    if(verdict === 'OK'){
         return plus_change(difficulty,strength);
     }
     else {
