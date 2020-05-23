@@ -52,6 +52,7 @@ class App extends React.Component {
         };
         this.handleHandleChange = this.handleHandleChange.bind(this);
         this.getSubmissions = this.getSubmissions.bind(this);
+        this.updateStrengths = this.updateStrengths.bind(this);
     }
 
     handleHandleChange(event) {
@@ -60,8 +61,23 @@ class App extends React.Component {
 
     getSubmissions() {
         codeforces.getSubmissions(this.state.handle).then(submissions =>{
-            this.setState({submissions: submissions});
+            this.setState({submissions: submissions}, this.updateStrengths);
         });
+    }
+
+    updateStrengths() {
+        let tags = JSON.parse(JSON.stringify(BLANK_TAGS));
+        let submissions = this.state.submissions.reverse();
+        for(let sub of submissions){
+            let prob = sub.problem;
+            for(let tag of prob.tags){
+                if(tags[tag]){
+                    tags[tag].submissionCount += 1;
+                    tags[tag].strength = changes(tags[tag].strength, prob.rating, sub.verdict);
+                }
+            }
+        }
+        this.setState({tags: tags});
     }
 
     render() {
@@ -72,7 +88,7 @@ class App extends React.Component {
                     <input onChange={this.handleHandleChange} placeholder="enter codeforces handle" />
                     <button onClick={this.getSubmissions}>Go</button>
                 </div>
-                {/*this.state.submissions.map(sub => sub.id.toString())*/}
+                {/*Object.entries(this.state.tags).map(tag => <h4>{tag[0]+"-"+tag[1].strength}</h4>)*/}
             </div>
             //input for handle here
             //suggested problems here
