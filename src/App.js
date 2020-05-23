@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import codeforces from './codeforces'
+import changes from './changes.js'
 
 class App extends React.Component {
     constructor(props) {
