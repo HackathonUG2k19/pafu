@@ -75,6 +75,17 @@
     font-size: 20px;
 }
 
+.prob-list {
+    margin: 40px auto;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80vw;
+    max-width: 1200px;
+}
+
 @media only screen and (max-width: 600px) {
   .prompt {
     font-size: 20px;

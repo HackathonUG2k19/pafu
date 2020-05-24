@@ -3,6 +3,9 @@ import './App.css';
 import codeforces from './codeforces';
 import changes from './changes.js';
 import splash from './splash.png';
+import Problem from './Problem.js';
+
+const sample_problem = {"contestId":1354,"index":"B","name":"Ternary String","type":"PROGRAMMING","rating":1200,"tags":["binary search","dp","implementation","two pointers"]};
 
 const BLANK_TAGS = {
     'binary search' : {submissionCount: 0, strength: 1000},
@@ -49,7 +52,7 @@ class App extends React.Component {
             handle : '',
             tags : BLANK_TAGS,
             weakTags : [],
-            suggestedProblems : [],
+            suggestedProblems : [], //sample_problem, sample_problem, sample_problem, sample_problem, sample_problem, sample_problem, sample_problem, sample_problem],
             submissions: []
         };
         this.handleHandleChange = this.handleHandleChange.bind(this);
@@ -123,7 +126,9 @@ class App extends React.Component {
                     <input onChange={this.handleHandleChange} placeholder="enter codeforces handle" />
                     <button onClick={this.getSubmissions}>Go</button>
                 </div>
-                {this.state.suggestedProblems.map(prob => <h4>{prob.contestId.toString()+prob.index}</h4>)}
+                <ul className="prob-list">
+                    {this.state.suggestedProblems.map(prob => <li key={prob.contestId.toString() + prob.index}><Problem problem={prob} /></li>)}
+                </ul>
             </div>
             //input for handle here
             //suggested problems here
