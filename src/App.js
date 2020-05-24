@@ -48,12 +48,14 @@ class App extends React.Component {
         this.state = {
             handle : '',
             tags : BLANK_TAGS,
+            weakTags : [],
             suggestedProblems : [],
             submissions: []
         };
         this.handleHandleChange = this.handleHandleChange.bind(this);
         this.getSubmissions = this.getSubmissions.bind(this);
         this.updateStrengths = this.updateStrengths.bind(this);
+        this.getWeakTags = this.getWeakTags.bind(this);
     }
 
     handleHandleChange(event) {
@@ -78,7 +80,18 @@ class App extends React.Component {
                 }
             }
         }
-        this.setState({tags: tags});
+        this.setState({tags: tags}, this.getWeakTags);
+    }
+
+    getWeakTags() {
+        let tagList = Object.entries(this.state.tags);
+        let weakTags = [];
+        tagList = tagList.filter(tag => tag[1].submissionCount >= 3);
+        tagList.sort((a,b) => a[1].strength - b[1].strength);
+        for(let i = 0; i < Math.min(5,tagList.length); i++){
+            weakTags.push(tagList[i][0]);
+        }
+        this.setState({weakTags: weakTags});
     }
 
     render() {
@@ -94,7 +107,7 @@ class App extends React.Component {
                     <input onChange={this.handleHandleChange} placeholder="enter codeforces handle" />
                     <button onClick={this.getSubmissions}>Go</button>
                 </div>
-                {/*Object.entries(this.state.tags).map(tag => <h4>{tag[0]+"-"+tag[1].strength}</h4>)*/}
+                {this.state.weakTags.map(tag => <h4>{tag}</h4>)}
             </div>
             //input for handle here
             //suggested problems here
