@@ -2,7 +2,7 @@
 Submission repository for pafu for HackathonUG2k19.
 
 # CF-Suggester
-A tool for all the CP loving teens if IIIT-H.
+A tool for all the CP loving teens of IIIT-H.
 CF-Suggester helps you become better at competitive programming by cleverly suggesting problems on [Codeforces]("https://codeforces.com") according to your submit history.
 
 Enter your codeforces handle, and CF-Suggester will analyze your submission history on codeforces and create a model of which areas you stand strong in, and which areas require improvement. Based on this analysis, it recommends links to codeforces problems that you can solve to get better in your weak areas.

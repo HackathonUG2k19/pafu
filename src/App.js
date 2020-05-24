@@ -130,8 +130,6 @@ class App extends React.Component {
                     {this.state.suggestedProblems.map(prob => <li key={prob.contestId.toString() + prob.index}><Problem problem={prob} /></li>)}
                 </ul>
             </div>
-            //input for handle here
-            //suggested problems here
         );
     }
 }
