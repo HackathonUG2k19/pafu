@@ -14,9 +14,28 @@ const codeforces = {
             .catch(() => []);
     },
 
-    getProblems : () => {
+    getProblems : (tag, minRating, maxRating) => {
         // method to return a list of problems based on tags, and sorted by
         // number of correct submissions
+        
+        let probList = [];
+        let url = BASE_URL + "problemset.problems?tags=" + tag;
+        return fetch(url)
+            .then(response => response.json())
+            .then(jsonResponse => {
+                let retList = jsonResponse.result.problems;
+                retList = retList.filter(prob => prob.rating <= maxRating && prob.rating >= minRating);
+                if(retList.length <= 5) {
+                    probList = retList;
+                }
+                else {
+                    for(let i = 0; i<5; i++){
+                        probList.push(retList[Math.floor(Math.random()*retList.length)]);
+                    }
+                }
+                return probList;
+            })
+            .catch(() => []);
     },
 
 };

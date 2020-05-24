@@ -56,6 +56,7 @@ class App extends React.Component {
         this.getSubmissions = this.getSubmissions.bind(this);
         this.updateStrengths = this.updateStrengths.bind(this);
         this.getWeakTags = this.getWeakTags.bind(this);
+        this.getProblems = this.getProblems.bind(this);
     }
 
     handleHandleChange(event) {
@@ -86,12 +87,27 @@ class App extends React.Component {
     getWeakTags() {
         let tagList = Object.entries(this.state.tags);
         let weakTags = [];
-        tagList = tagList.filter(tag => tag[1].submissionCount >= 3);
+        tagList = tagList.filter(tag => tag[1].submissionCount >= 5);
         tagList.sort((a,b) => a[1].strength - b[1].strength);
         for(let i = 0; i < Math.min(5,tagList.length); i++){
             weakTags.push(tagList[i][0]);
         }
-        this.setState({weakTags: weakTags});
+        this.setState({weakTags: weakTags}, this.getProblems);
+    }
+
+    async getProblems() {
+        let weakTags = JSON.parse(JSON.stringify(this.state.weakTags));
+        //console.log(weakTags);
+        let suggestedProblems = [];
+        for(let tag of weakTags){
+            await codeforces.getProblems(tag.split(" ").join("%20"), 0.7*this.state.tags[tag].strength, 1.3*this.state.tags[tag].strength)
+                .then(probList => {
+                    console.log(probList);
+                    suggestedProblems = suggestedProblems.concat(probList);
+                });
+        }
+        //console.log(suggestedProblems);
+        this.setState({suggestedProblems: suggestedProblems});
     }
 
     render() {
@@ -107,7 +123,7 @@ class App extends React.Component {
                     <input onChange={this.handleHandleChange} placeholder="enter codeforces handle" />
                     <button onClick={this.getSubmissions}>Go</button>
                 </div>
-                {this.state.weakTags.map(tag => <h4>{tag}</h4>)}
+                {this.state.suggestedProblems.map(prob => <h4>{prob.contestId.toString()+prob.index}</h4>)}
             </div>
             //input for handle here
             //suggested problems here
