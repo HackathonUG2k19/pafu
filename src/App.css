@@ -52,7 +52,7 @@
     margin: 0 auto;
     width: 60vw;
     max-width: 600px;
-    height: 30px;
+    height: 40px;
 }
 
 .inp input {
@@ -61,6 +61,7 @@
     border: none;
     width: 70%;
     height:100%;
+    font-size: 20px;
 
 }
 
@@ -71,10 +72,17 @@
     margin: 0 auto;
     width: 20%;
     height: 100%;
+    font-size: 20px;
 }
 
 @media only screen and (max-width: 600px) {
   .prompt {
-    font-size: 15px;
+    font-size: 20px;
+  }
+  .inp input {
+      font-size: 15px;
+  }
+  .inp button {
+      font-size: 15px;
   }
 }
