@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import codeforces from './codeforces'
-import changes from './changes.js'
+import codeforces from './codeforces';
+import changes from './changes.js';
+import splash from './splash.png';
 
 const BLANK_TAGS = {
     'binary search' : {submissionCount: 0, strength: 1000},
@@ -83,8 +84,13 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <h1>Cf-Suggester</h1>
-                <div>
+                <div className="splash">
+                    <img src={splash} alt="Splash"/>
+                </div>
+                <div className="prompt">
+                    Enter your codeforces handle to get suggestions for problems to solve.
+                </div>
+                <div className="inp">
                     <input onChange={this.handleHandleChange} placeholder="enter codeforces handle" />
                     <button onClick={this.getSubmissions}>Go</button>
                 </div>
